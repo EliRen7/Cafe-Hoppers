@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const CafeData = require('./cafedata');
 const CoffeeShop = require("../models/cafe");
+const cloudinary = require('cloudinary');
+
 
 mongoose.connect('mongodb://localhost:27017/cafe-hopping', {
     useNewURLParser: true,
@@ -20,7 +22,7 @@ const seedDB = async() =>{
         const cafe = new CoffeeShop({
             location: `${CafeData[random34].city}, ${CafeData[random34].province}`,
             name: `${CafeData[random34].name}`,
-            image: 'https://source.unsplash.com/collections/4930424',
+            image: 'https://api.cloudinary.com/v1_1/diarrmhtt/resources/image',
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt voluptatibus aut distinctio beatae suscipit eos atque id, eaque soluta! Consequatur perspiciatis eveniet alias voluptate ipsum reiciendis ex error corporis nesciunt?'
         })
         await cafe.save();
