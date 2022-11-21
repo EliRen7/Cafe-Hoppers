@@ -2,11 +2,13 @@ const express = require('express');
 const path = require('path')
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
-const {cafeSchema} = require('./schemas.js')
+const {cafeSchema, reviewSchema} = require('./schemas.js')
 const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
 const methodOverride = require('method-override')
 const CoffeeShop = require("./models/cafe");
+const Review = require('./models/review')
+// const cafe = require('./models/cafe');
 // const cafe = require('./models/cafe');
 
 mongoose.connect('mongodb://localhost:27017/cafe-hopping', {
@@ -39,10 +41,19 @@ const validateCafe = (req,res,next) =>{
     }
 }
 
+const validateReview = (req,res,next) =>{
+    const {error} = reviewSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    }else{
+        next();
+    }
+}
+
 app.get('/', (req, res)=>{
     res.render('home')
 })
-
 
 app.get('/cafes', catchAsync(async(req, res)=>{
     const cafes = await CoffeeShop.find({});
@@ -61,7 +72,7 @@ app.post('/cafes', validateCafe, catchAsync(async(req,res, next) => {
 }));
 
 app.get('/cafes/:id', catchAsync(async(req, res,) => {
-    const cafe = await CoffeeShop.findById(req.params.id)
+    const cafe = await CoffeeShop.findById(req.params.id).populate('reviews');
     res.render('cafes/show', {cafe});
 }));
 
@@ -81,6 +92,15 @@ app.delete('/cafes/:id', catchAsync(async(req,res) =>{
     await CoffeeShop.findByIdAndDelete(id);
     res.redirect('/cafes');
 }));
+
+app.post('/cafes/:id/reviews', validateReview, catchAsync(async (req,res) => {
+    const cafe = await CoffeeShop.findById(req.params.id);
+    const review = new Review(req.body.review);
+    cafe.reviews.push(review)
+    await review.save();
+    await cafe.save();
+    res.redirect(`/cafes/${cafe._id}`);
+}))
 
 app.all('*', (req,res,next) => {
     next(new ExpressError('Page Not Found', 404))
