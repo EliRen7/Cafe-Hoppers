@@ -2,14 +2,14 @@ const express = require('express');
 const path = require('path')
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
-const {cafeSchema, reviewSchema} = require('./schemas.js')
-const catchAsync = require('./utils/catchAsync')
+const session = require('express-session');
+const flash = require ('connect-flash');
 const ExpressError = require('./utils/ExpressError')
 const methodOverride = require('method-override')
-const CoffeeShop = require("./models/cafe");
-const Review = require('./models/review')
-// const cafe = require('./models/cafe');
-// const cafe = require('./models/cafe');
+
+
+const cafes = require('./routes/cafes')
+const reviews = require('./routes/reviews')
 
 mongoose.connect('mongodb://localhost:27017/cafe-hopping', {
     useNewURLParser: true,
@@ -30,77 +30,33 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'));
+app.use(express.static(path.join(__dirname, 'public')))
 
-const validateCafe = (req,res,next) =>{
-    const {error} = cafeSchema.validate(req.body);
-    if(error){
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
-    }else{
-        next();
+const sessionConfig = {
+    secret: 'this should be a better secret',
+    resave: false,
+    saveUninitalized: true,
+    cookie:{
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
+app.use(session(sessionConfig))
+app.use(flash());
 
-const validateReview = (req,res,next) =>{
-    const {error} = reviewSchema.validate(req.body);
-    if(error){
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
-    }else{
-        next();
-    }
-}
+app.use((req,res,next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
+
+app.use('/cafes', cafes)
+app.use('/cafes/:id/reviews', reviews)
 
 app.get('/', (req, res)=>{
     res.render('home')
 })
-
-app.get('/cafes', catchAsync(async(req, res)=>{
-    const cafes = await CoffeeShop.find({});
-    res.render('cafes/index', {cafes})
-}))
-
-app.get('/cafes/new', (req,res) => {
-    res.render('cafes/new');
-});
-
-app.post('/cafes', validateCafe, catchAsync(async(req,res, next) => {
-    // if(!req.body.cafe) throw new ExpressError('Invalid Cafe Data', 400)
-    const cafe = new CoffeeShop(req.body.cafe)
-    await cafe.save();
-    res.redirect(`/cafes/${cafe._id}`)
-}));
-
-app.get('/cafes/:id', catchAsync(async(req, res,) => {
-    const cafe = await CoffeeShop.findById(req.params.id).populate('reviews');
-    res.render('cafes/show', {cafe});
-}));
-
-app.get('/cafes/:id/edit', catchAsync(async(req,res) => {
-    const cafe = await CoffeeShop.findById(req.params.id)
-    res.render('cafes/edit', {cafe});
-}));
-
-app.put('/cafes/:id', validateCafe, catchAsync(async(req,res) => {
-    const { id } = req.params;
-    const cafe = await CoffeeShop.findByIdAndUpdate(id,{...req.body.cafe})
-    res.redirect(`/cafes/${cafe._id}`)
-}));
-
-app.delete('/cafes/:id', catchAsync(async(req,res) =>{
-    const {id} = req.params;
-    await CoffeeShop.findByIdAndDelete(id);
-    res.redirect('/cafes');
-}));
-
-app.post('/cafes/:id/reviews', validateReview, catchAsync(async (req,res) => {
-    const cafe = await CoffeeShop.findById(req.params.id);
-    const review = new Review(req.body.review);
-    cafe.reviews.push(review)
-    await review.save();
-    await cafe.save();
-    res.redirect(`/cafes/${cafe._id}`);
-}))
 
 app.all('*', (req,res,next) => {
     next(new ExpressError('Page Not Found', 404))
