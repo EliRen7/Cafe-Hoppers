@@ -1,4 +1,5 @@
 <% layout('layouts/boilerplate') %>
+<!-- <div id="map" style="width:100%; height:500px";></div> -->
    <h1>All Cafes</h1>
     <div>
         <a href="/cafes/new">Add Cafe</a>
@@ -8,7 +9,13 @@
         <div class="card" mb-3>
             <div class="row">
                 <div class="col-md-4">
-                    <img class="img-fluid" alt="" src="<%=cafe.image%>">
+                    <% if(cafe.images.length) {%> 
+                    <img class="img-fluid" alt="" src="<%=cafe.images[0].url%>">
+                      <% }else {%>
+                        <img class="img-fluid" 
+                        alt=""
+                       src="https://res.cloudinary.com/diarrmhtt/image/upload/v1673167609/Cafe%20Hopping/osqgcbc7ziezetcokbt1.jpg">
+                    <%} %>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -23,3 +30,6 @@
             </div>
         </div>
     <% }%>
+    
+
+    <script src="/javascripts/clusterMap.js"></script>

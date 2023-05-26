@@ -1,72 +1,27 @@
 const express = require('express');
 const router = express.Router();
+const cafes = require('../controllers/cafes')
 const catchAsync = require('../utils/catchAsync')
-const {cafeSchema} = require('../schemas.js')
-const ExpressError = require('../utils/ExpressError')
 const CoffeeShop = require("../models/cafe");
-const { off } = require('../models/review');
-const {isLoggedIn} = require('../middleware')
+const {isLoggedIn, isAuthor, validateCafe} = require('../middleware')
+const multer =require ('multer')
+const {storage} = require('../cloudinary')
+const upload = multer ({ storage})
+
+router.route('/')
+    .get(catchAsync(cafes.index))
+    .post(isLoggedIn, upload.array('image'), validateCafe, catchAsync(cafes.createCafe));
+  
+router.get('/new', isLoggedIn, cafes.renderNewForm);
+
+router.route('/:id')
+    .get(catchAsync(cafes.showCafe))
+    .put(isLoggedIn, isAuthor, upload.array('image'), validateCafe, catchAsync(cafes.updateCafe))
+    .delete(isLoggedIn, isAuthor, catchAsync(cafes.deleteCafe))
+
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(cafes.renderEditForm));
 
 
 
 
-const validateCafe = (req,res,next) =>{
-    const {error} = cafeSchema.validate(req.body);
-    if(error){
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
-    }else{
-        next();
-    }
-}
-
-router.get('/', catchAsync(async(req, res)=>{
-    const cafes = await CoffeeShop.find({});
-    res.render('cafes/index', {cafes})
-}))
-
-router.get('/new', isLoggedIn,(req,res) => {
-    res.render('cafes/new');
-});
-
-router.post('/', isLoggedIn, validateCafe, catchAsync(async(req,res, next) => {
-    // if(!req.body.cafe) throw new ExpressError('Invalid Cafe Data', 400)
-    const cafe = new CoffeeShop(req.body.cafe)
-    await cafe.save();
-    req.flash('success', 'Successfully made a new cafe!');
-    res.redirect(`/cafes/${cafe._id}`)
-}));
-
-router.get('/:id', catchAsync(async(req, res,) => {
-    const cafe = await CoffeeShop.findById(req.params.id).populate('reviews');
-    if(!cafe){
-    req.flash('error', 'Cafe not found!')
-    return res.redirect('/cafes')
-    }
-    res.render('cafes/show', {cafe});
-}));
-
-router.get('/:id/edit', isLoggedIn, catchAsync(async(req,res) => {
-    const cafe = await CoffeeShop.findById(req.params.id)
-    if(!cafe){
-        req.flash('error', 'Cafe not found!')
-        return res.redirect('/cafes')
-        }
-    res.render('cafes/edit', {cafe});
-}));
-
-router.put('/:id', isLoggedIn, validateCafe, catchAsync(async(req,res) => {
-    const { id } = req.params;
-    const cafe = await CoffeeShop.findByIdAndUpdate(id,{...req.body.cafe})
-    req.flash('success', 'Successfully updated cafe!');
-    res.redirect(`/cafes/${cafe._id}`)
-}));
-
-router.delete('/:id', isLoggedIn, catchAsync(async(req,res) =>{
-    const {id} = req.params;
-    await CoffeeShop.findByIdAndDelete(id);
-    req.flash('success', 'Successfully deleted cafe!');
-    res.redirect('/cafes');
-}));
-
-module.exports = router
+module.exports = router;
