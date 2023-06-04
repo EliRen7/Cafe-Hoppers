@@ -2,6 +2,8 @@ if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
+
+
 const express = require('express');
 const path = require('path')
 const mongoose = require('mongoose');
@@ -20,7 +22,9 @@ const mongoSanitize = require('express-mongo-sanitize');
 const userRoutes = require('./routes/users');
 const cafeRoutes = require('./routes/cafes');
 const reviewRoutes = require('./routes/reviews');
+// const dbUrl= process.env.DB_URL
 
+// 'mongodb://localhost:27017/cafe-hopping'
 mongoose.connect('mongodb://localhost:27017/cafe-hopping', {
     useNewURLParser: true,
     useUnifiedTopology: true
@@ -44,11 +48,13 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(mongoSanitize());
 
 const sessionConfig = {
+    name: 'session',
     secret: 'this should be a better secret',
     resave: false,
     saveUninitalized: true,
     cookie:{
         httpOnly: true,
+        // secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
