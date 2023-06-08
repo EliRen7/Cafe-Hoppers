@@ -2,8 +2,6 @@ if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
-
-
 const express = require('express');
 const path = require('path')
 const mongoose = require('mongoose');
@@ -15,17 +13,15 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
-
 const mongoSanitize = require('express-mongo-sanitize');
-
-
 const userRoutes = require('./routes/users');
 const cafeRoutes = require('./routes/cafes');
 const reviewRoutes = require('./routes/reviews');
-// const dbUrl= process.env.DB_URL
+const MongoDBStore = require("connect-mongo")(session);
+const dbUrl= 'mongodb://localhost:27017/cafe-hopping'
 
 // 'mongodb://localhost:27017/cafe-hopping'
-mongoose.connect('mongodb://localhost:27017/cafe-hopping', {
+mongoose.connect(dbUrl, {
     useNewURLParser: true,
     useUnifiedTopology: true
 })
@@ -47,7 +43,18 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(mongoSanitize());
 
+const store = new MongoDBStore({
+    url: dbUrl,
+    secret: 'thisshouldbeabettersecret!',
+    touchAfter: 24 * 60 *60
+})
+
+store.on('error', function(e){
+    console.log("Session Store Error", e)
+})
+
 const sessionConfig = {
+    store,
     name: 'session',
     secret: 'this should be a better secret',
     resave: false,
