@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Henny+Penny&display=swap');
+
+body{
+  
+}
+
+
+.btn-funky-moon {
+    background: #A770EF; 
+    background: -webkit-linear-gradient(145deg, #FDB99B, #CF8BF3, #A770EF); 
+    background: linear-gradient(145deg, #FDB99B, #CF8BF3, #A770EF); 
+    color: #fff;
+    border: 3px solid #eee;
+
+}
+
+.home-font{
+    font-family: 'Henny Penny', cursive;
+}
+
+.footer-font{
+    font-family: 'Henny Penny', cursive;
+}
+
+
+
+.navbar-title{
+    font-family: 'Henny Penny', cursive;
+}
+
+
+.add-item{
+    text-decoration: none;
+    background-color: rgb(153, 158, 161);
+    
+}
+
+.title{
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 3rem;
+}
+
+
+/* background-color: rgba(244, 225, 233, 0.966); */

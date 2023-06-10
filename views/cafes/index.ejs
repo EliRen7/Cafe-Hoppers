@@ -1,31 +1,32 @@
 <% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/stylesheets/index.css">
 
 
-   <h1>All Cafes</h1>
+   <h1 class="title text-center">All Cafes</h1>
     <div>
-        <a href="/cafes/new">Add Cafe</a>
+        <a href="/cafes/new" class="add-item text-white p-2 rounded-pill btn-funky-moon">Add Cafe</a>
     </div>
 
     <% for (let cafe of cafes) {%>
-        <div class="card mb-3">
+        <div class="card mb-5 mt-5" >
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4" >
                     <% if(cafe.images.length) {%> 
-                    <img class="img-fluid" alt="" src="<%=cafe.images[0].url%>">
+                    <img class="img-fluid" alt="img" src="<%=cafe.images[0].url%>">
                       <% }else {%>
                         <img crossorigin="anonymous"  class="img-fluid" 
                         alt="img"
                        src="https://res.cloudinary.com/diarrmhtt/image/upload/v1673167609/Cafe%20Hopping/osqgcbc7ziezetcokbt1.jpg">
-                    <%} %>
+                    <%} %>  
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 " >
                     <div class="card-body">
                         <h5 class="card-title"><%= cafe.title %></h5>
                         <p class="card-text"><%= cafe.description %></p>
                         <p class="card-text">
                             <small class="text-muted"><%= cafe.location %></small>
                         </p>
-                        <a class="btn btn-success" href="/cafes/<%=cafe._id%>">View <%=cafe.name%></a>
+                        <a class="btn btn-funky-moon" href="/cafes/<%=cafe._id%>">View <%=cafe.name%></a>
                     </div>
                 </div>
             </div>
