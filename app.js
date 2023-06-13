@@ -18,7 +18,7 @@ const userRoutes = require('./routes/users');
 const cafeRoutes = require('./routes/cafes');
 const reviewRoutes = require('./routes/reviews');
 const MongoDBStore = require("connect-mongo")(session);
-const dbUrl= 'mongodb://localhost:27017/cafe-hopping'
+const dbUrl= process.env.DB_URL
 
 // 'mongodb://localhost:27017/cafe-hopping'
 mongoose.connect(dbUrl, {
