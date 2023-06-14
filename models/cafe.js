@@ -15,17 +15,6 @@ ImageSchema.virtual('thumbnail').get(function() {
 const CafeSchema = new Schema({
     name: String,
     images: [ImageSchema],
-    // geometry:{
-    //     type: {
-    //         type: String, 
-    //         enum: ['Point'],
-    //         required: true
-    // },
-    //     coordinates: {
-    //         type: [Number],
-    //         required: true
-    //     } 
-    // },
     description: String,
     location: String,
     author: {
