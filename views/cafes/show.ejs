@@ -33,7 +33,7 @@
             </ul> 
             <% if(currentUser && cafe.author.equals(currentUser._id)) {%>
             <div class="card-body">
-            <a class="card-link btn btn-info" href="/cafes/<%=cafe._id%>/edit">Edit</a>
+            <a class="card-link btn btn-funky-moon text-white" href="/cafes/<%=cafe._id%>/edit">Edit</a>
             <form class="d-inline" action="/cafes/<%=cafe.id%>?_method=DELETE" method="POST">
                 <button class="btn btn-danger">Delete</button> 
             </form>
@@ -46,7 +46,7 @@
     </div>
     <div class="col-6">
       <% if(currentUser) { %>
-      <h3>Review</h3>
+      <h3 class="title text-white">Review</h3>
       <form action="/cafes/<%=cafe._id%>/reviews" method="POST" class="mb-3 validated-form" novalidate >
         <div class="mb-3">
         <fieldset class="starability-heart">
@@ -64,13 +64,13 @@
         </fieldset>
       </div>
         <div class="mb-3">
-          <label class="form-label" for="body">Leave a Comment</label>
+          <label class="form-label text-white home-font" for="body">Leave a Comment</label>
           <textarea class="form-control" name="review[body]" id="" cols="30" rows="3" required></textarea>
           <div class="valid-feedback">
             Looks good!
           </div>
         </div>
-        <button class="btn btn-success">Submit Review</button>
+        <button class="btn btn-funky-moon text-white">Submit Review</button>
       </form>
       <% } %>
       <% for(let review of cafe.reviews) { %>

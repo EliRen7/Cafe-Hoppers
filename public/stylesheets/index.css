@@ -1,32 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Henny+Penny&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Philosopher&display=swap');
 
 body{
-  
+  background-image: url('coffee-ground.png');
+  opacity: 95%;
+  background-size: 50%;
+  background-color: #a47c5c;
 }
 
 
 .btn-funky-moon {
-    background: #A770EF; 
-    background: -webkit-linear-gradient(145deg, #FDB99B, #CF8BF3, #A770EF); 
-    background: linear-gradient(145deg, #FDB99B, #CF8BF3, #A770EF); 
-    color: #fff;
+    background: #FFEFBA;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ae8e75, #b08b60);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #db84bb, #867557); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: #000;
     border: 3px solid #eee;
 
 }
 
 .home-font{
-    font-family: 'Henny Penny', cursive;
+    font-family: 'Philosopher', sans-serif;
 }
 
 .footer-font{
-    font-family: 'Henny Penny', cursive;
+    font-family: 'Philosopher', sans-serif;
 }
 
 
 
 .navbar-title{
-    font-family: 'Henny Penny', cursive;
+    font-family: 'Philosopher', sans-serif;
 }
 
 
@@ -38,8 +41,14 @@ body{
 
 .title{
     font-family: 'Shadows Into Light', cursive;
-    font-size: 3rem;
+    font-size: 4rem;
 }
 
 
 /* background-color: rgba(244, 225, 233, 0.966); */
+
+
+/* #c9976ee7 */
+/* #d6b295e7 */
+/* #f5dac4eb */
+/* #a47c5c */

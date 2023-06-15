@@ -2,7 +2,7 @@
 
 
     <div class="row">
-        <h1 class="text-center">Edit Cafe</h1>
+        <h1 class="text-center text-white title">Edit Cafe</h1>
             <div class="col-md-6 offset-md-3">
                 <form action="/cafes/<%=cafe._id%>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
                     <div class="mb-3">
@@ -38,14 +38,14 @@
                                 <div class="form-check-inline">
                                     <input type="checkbox" name="deleteImages[]" value="<%=img.filename%>" id="image-<%=i%>">
                                 </div>
-                                <label for="image-<%=i%>">Delete</label>
+                                <label for="image-<%=i%>" class="text-white">Delete</label>
                             <% }) %>    
                           </div>
                     <div class="mb-3">
-                    <button class="btn btn-info">Update Cafe!</button>
+                    <button class="btn btn-funky-moon text-white">Update Cafe!</button>
                     </div>
                 </form>
-                <a href="/cafes/<%=cafe._id%>">Back To Cafe</a>
+                <a href="/cafes/<%=cafe._id%>" class="text-white">Back To Cafe</a>
             </div>
 
 
