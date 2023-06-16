@@ -1,14 +1,15 @@
 <% layout('layouts/boilerplate') %>
 <link rel="stylesheet" href="/stylesheets/index.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
-   <h1 class="title text-center text-white">All Cafes</h1>
+   <h1 class="title text-center text-white" data-aos="fade-right" data-aos-duration="3000">All Cafes</h1>
     <div>
         <a href="/cafes/new" class="add-item text-white p-2 rounded-pill btn-funky-moon">Add Cafe</a>
     </div>
 
     <% for (let cafe of cafes) {%>
-        <div class="card mb-5 mt-5" >
+        <div class="card mb-5 mt-5" data-aos="zoom-out-down" data-aos-duration="2000">
             <div class="row">
                 <div class="col-md-4" >
                     <% if(cafe.images.length) {%> 
@@ -18,7 +19,7 @@
                         alt="img"
                        src="https://res.cloudinary.com/diarrmhtt/image/upload/v1673167609/Cafe%20Hopping/osqgcbc7ziezetcokbt1.jpg">
                     <%} %>  
-                </div>
+                </div> 
                 <div class="col-md-8 " >
                     <div class="card-body">
                         <h5 class="card-title"><%= cafe.title %></h5>
@@ -33,3 +34,7 @@
         </div>
     <% }%>
     
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>

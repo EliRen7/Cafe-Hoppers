@@ -4,8 +4,8 @@
     <div class="row">
         <h1 class="text-center text-white title">Edit Cafe</h1>
             <div class="col-md-6 offset-md-3">
-                <form action="/cafes/<%=cafe._id%>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
-                    <div class="mb-3">
+                <form action="/cafes/<%=cafe._id%>?_method=PUT" method="POST" novalidate class="validated-form text-white" enctype="multipart/form-data">
+                    <div class="mb-3 ">
                         <label class="form-label" for="name">Name</label>
                         <input class="form-control" type="text" id="name" name="cafe[name]"  value="<%=cafe.name%>" required>
                         <div class="valid-feedback">
