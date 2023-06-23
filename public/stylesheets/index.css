@@ -2,10 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Philosopher&display=swap');
 
 body{
-  background-image: url('petals.png');
+  /* background-image: url(''); */
   opacity: 95%;
   background-size: 65%;
-  background-color: #e8dbcf;
+  background-color: #f5e6dc; 
   
 }
 
@@ -63,3 +63,9 @@ body{
 
 
 /* graditent button #867557 */
+
+
+/* #e8dbcf; */
+
+
+/* #f9e4d6; */
