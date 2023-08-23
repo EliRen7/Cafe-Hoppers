@@ -31,8 +31,8 @@ To set up the project locally, follow these steps:
 
 1. Clone the repository:
   ```bash
-  git clone https://github.com/your-username/cafe-hopping-website.git
-  cd cafe-hopping-website
+  git clone https://github.com/EliRen7/Cafe-Hoppers.git
+  cd Cafe-Hoppers
 ```
 
 2. Install dependencies:
