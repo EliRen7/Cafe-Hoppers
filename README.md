@@ -33,6 +33,7 @@ To set up the project locally, follow these steps:
   ```bash
   git clone https://github.com/your-username/cafe-hopping-website.git
   cd cafe-hopping-website
+```
 
 2. Install dependencies:
   ```bash
