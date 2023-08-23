@@ -37,6 +37,7 @@ To set up the project locally, follow these steps:
 2. Install dependencies:
   ```bash
   npm install
+```
 
 3. Create a .env file in the root directory and add your environment variables:
   ```bash
@@ -45,10 +46,12 @@ To set up the project locally, follow these steps:
   CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
   CLOUDINARY_API_KEY=your_cloudinary_api_key
   CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+```
 
 4. Run the application:
   ```bash
   npm start
+```
 
 ## Usage
 
