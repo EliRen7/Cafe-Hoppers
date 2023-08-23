@@ -2,7 +2,7 @@
 
 Welcome to the Cafe-Hopping Website repository! This full stack web application is designed to bring together cafe enthusiasts who want to explore the vibrant cafe culture of South Korea. Users can share their favorite cafes, upload images, rate, comment, and more. The project is built using Node.js, Express, EJS, MongoDB, and PassportJS for authentication.
 
-![Cafe-Hopping Banner](/public/images/cafehopping.png)
+![Cafe-Hopping Banner](/public/stylesheets/cafehopping.png)
 
 ## Table of Contents
 
