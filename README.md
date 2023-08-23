@@ -51,6 +51,7 @@ To set up the project locally, follow these steps:
   npm start
 
 ## Usage
+
   1. Register an account to access all features.
   2. Explore cafes posted by other users.
   3. Add new cafes along with descriptions, locations, and images.
